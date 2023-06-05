@@ -106,3 +106,38 @@ the lifecycle of containers. [runwasi](https://github.com/deislabs/runwasi) is a
 project to integrate Wasm runtimes with `containerd` to enable `containerd` to
 manage the lifecycle of Wasm apps. Currently, `wasmtime` and `wasmedge` runtimes
 are supported in `runwasi`.
+
+## Vendors and Frameworks for Wasm+Wasi
+
+These are some notable vendors and frameworks supporting Wasm+Wasi. 
+
+### Docker
+
+Starting in Docker Desktop 4.15, Docker uses `runwasi` to support Wasm workloads running in the following runtimes:
+
+*   `wasmedge`
+*   `wasmtime`
+*   `spin` from Fermyon
+*   `slight` from Deislabs
+
+See [Announcing Docker+Wasm Technical Preview 2](https://www.docker.com/blog/announcing-dockerwasm-technical-preview-2/) for more details.
+
+### Azure
+
+Azure AKS is also previewing Wasm node pools using `runwasi`. Currently, there are only `containerd` shims available for [spin](https://spin.fermyon.dev/) and [slight](https://github.com/deislabs/spiderlightning#spiderlightning-or-slight) applications, which use the `wasmtime` runtime.
+
+### Spin
+
+[Spin](https://spin.fermyon.dev/) by Fermyon is a WebAssembly framework for building and running event-driven microservice applications with WebAssembly (Wasm) components. Spin handles the HTTP request/response using WAGI HTTP Executor. Spin SDKs are available in Rust, Go and .NET. and all Wasi-compatible languages are supported. Additionally, [Fermyon Cloud](https://www.fermyon.com/cloud) service fetches source code from the GitHub repo, builds it into Wasm bytecode, runs it as a serverless microservice, and connects HTTP input and output to it using Spin framework. 
+
+### Slight
+
+[SpiderLightning](https://github.com/deislabs/spiderlightning#spiderlightning-or-slight) is a set of WIT interfaces that abstract distributed application capabilities (such as key-value, messaging, HTTP server/client) and a runtime CLI for running Wasm applications that use these capabilities.
+
+## Languages supported in Wasm+WASI
+
+Here’s a [comprehensive list of
+languages](https://www.fermyon.com/wasm-languages/webassembly-language-support)
+from Fermyon and [The Complex World of Wasm Language
+Support](https://www.fermyon.com/blog/complex-world-of-wasm-language-support)
+provides the context.
