@@ -49,3 +49,60 @@ implement their own POSIX sockets. There are projects like
 frameworks like [Spin](https://spin.fermyon.dev/) use WAGI) or
 [WASIX](https://wasix.org/) to add networking, multi-threading and more to WASI
 (but only supported on `wasmer` runtime for now).
+
+## Wasm Runtimes
+
+In Wasm, instead of compiling to an OS and architecture such as `linux/arm64`,
+you compile to WebAssembly (`wasm32/wasi`). Wasm has its own bytecode format
+that needs to run in a Wasm runtime.
+
+Many wasm runtimes exist (see
+[awesome-wasm-runtimes](https://github.com/appcypher/awesome-wasm-runtimes)),
+some of the popular ones are:
+
+* [wasmtime](https://github.com/bytecodealliance/wasmtime): A Bytecode Alliance project, designed to run on servers and the cloud.
+* [wasmer](https://wasmer.io/): Another popular Wasm runtime from a startup.
+* [wasmedge](https://wasmedge.org/): A CNCF project, with more focus on edge
+  devices.
+
+## Relevant specs and projects
+
+There are relevant specs and projects (that I haven’t looked in too much
+detail):
+
+* [WebAssembly Component Model](https://github.com/WebAssembly/component-model):
+  WASI is layered on top of the Component Model, with the Component Model
+  providing the foundational building blocks used to define WASI’s interfaces.
+  In comparison to traditional Operating Systems, the Component Model fills the
+  role of an OS's process model (defining how processes start up and communicate
+  with each other) while WASI fills the role of an OS's many I/O interfaces.
+* [WAGI](https://github.com/deislabs/wagi): WebAssembly Gateway Interface allows
+  you to run WebAssembly WASI binaries as HTTP handlers. Write a command line
+  application that prints a few headers, and compile it to `wasm32/wasi`. Add an
+  entry to the `modules.toml` matching URL to the Wasm module and that’s it.
+* [WASIX](https://wasix.org/): WASIX is the long term stabilization and support
+  of the existing WASI plus additional non-invasive syscall extensions (e.g.
+  networking, multi-threading) that complete the missing gaps sufficiently
+  enough to enable real, practical and useful applications to be compiled and
+  used now. It aims to speed up the ecosystem around the WASI so that the
+  Wasm’ification of code bases around the world can really start. Only supported
+  in `wasmer` runtime right now.
+
+## Running Wasm in containers
+
+There’s ongoing work to run Wasm inside of containers. This might seem
+counterintuitive — why take something smaller, faster, and more portable than a
+container and run it inside a container? Running Wasm apps inside of a container
+gets you the security benefits of the Wasm sandbox and the benefits of the
+existing toolchain like Docker, Kubernetes.
+
+### runwasi
+
+<img src="https://raw.githubusercontent.com/containerd/runwasi/main/art/logo/runwasi_icon1.svg" alt="Runwasi Logo" width="30%" height="30%">
+
+Kubernetes relies on a container runtime called
+[containerd](https://containerd.io/) (which in turn relies on `runc`) to manage
+the lifecycle of containers. [runwasi](https://github.com/deislabs/runwasi) is a
+project to integrate Wasm runtimes with `containerd` to enable `containerd` to
+manage the lifecycle of Wasm apps. Currently, `wasmtime` and `wasmedge` runtimes
+are supported in `runwasi`.
