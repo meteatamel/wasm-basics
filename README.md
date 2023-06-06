@@ -115,10 +115,10 @@ These are some notable vendors and frameworks supporting Wasm+Wasi.
 
 Starting in Docker Desktop 4.15, Docker uses `runwasi` to support Wasm workloads running in the following runtimes:
 
-*   `wasmedge`
-*   `wasmtime`
-*   `spin` from Fermyon
-*   `slight` from Deislabs
+* `wasmedge`
+* `wasmtime`
+* `spin` from Fermyon
+* `slight` from Deislabs
 
 See [Announcing Docker+Wasm Technical Preview 2](https://www.docker.com/blog/announcing-dockerwasm-technical-preview-2/) for more details.
 
@@ -141,3 +141,9 @@ languages](https://www.fermyon.com/wasm-languages/webassembly-language-support)
 from Fermyon and [The Complex World of Wasm Language
 Support](https://www.fermyon.com/blog/complex-world-of-wasm-language-support)
 provides the context.
+
+## Samples
+
+These are some samples in this repo:
+
+* [rust-wasm](./samples/rust-wasm/) - Running Rust on Wasm in Docker.
