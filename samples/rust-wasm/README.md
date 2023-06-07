@@ -8,7 +8,7 @@
   [Wasmtime](https://wasmtime.dev/) or
   [WasmEdge](https://wasmedge.org/book/en/quick_start/install.html).
 
-## Create, build, and run a HelloWorld Rust app
+## Create, build, and run a HelloWorld app
 
 Create:
 
@@ -39,7 +39,7 @@ Add `wasm32-wasi` target:
 rustup target add wasm32-wasi
 ```
 
-## Build and run HelloWorld Rust app in Wasm
+## Build and run HelloWorld app in Wasm
 
 Change the message in `main.rs` to the following:
 
