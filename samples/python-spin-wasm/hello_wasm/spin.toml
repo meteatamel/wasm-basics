@@ -1,0 +1,14 @@
+spin_manifest_version = "1"
+authors = ["Mete Atamel <atamel@google.com>"]
+description = "Python Spin HelloWorld app"
+name = "hello_wasm"
+trigger = { type = "http", base = "/" }
+version = "0.1.0"
+
+[[component]]
+id = "hello-wasm"
+source = "app.wasm"
+[component.trigger]
+route = "/..."
+[component.build]
+command = "spin py2wasm app -o app.wasm"

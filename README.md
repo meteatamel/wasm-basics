@@ -148,3 +148,4 @@ These are some samples in this repo:
 
 * [rust-wasm](./samples/rust-wasm/) - Running Rust on Wasm in Docker.
 * [dotnet8-wasm](./samples/dotnet-wasm) - Running .NET 8 (preview) on Wasm.
+* [python-spin-wasm](./samples/python-spin-wasm) - Running Python with Spin on Wasm.
