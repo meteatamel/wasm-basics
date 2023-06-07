@@ -4,6 +4,8 @@
     <RuntimeIdentifier>wasi-wasm</RuntimeIdentifier>
     <OutputType>Exe</OutputType>
     <PublishTrimmed>true</PublishTrimmed>
-    <!-- <WasmSingleFileBundle>true</WasmSingleFileBundle> -->
   </PropertyGroup>
+  <!-- <ItemGroup>
+    <PackageReference Include="Wasi.Sdk" Version="0.1.4-preview.10020" />
+  </ItemGroup> -->
 </Project>

@@ -1,7 +1,8 @@
-# Running .NET 8 (preview) on Wasm
+# Running .NET 8 (preview) on Wasm in Docker
 
 ## Prerequisites
 
+* You have Docker Desktop 4.15 or later.
 * You have .NET 8 Preview 4 [installed](https://dotnet.microsoft.com/en-us/download/dotnet/8.0).
 * You have a Wasm runtime installed, for example
   [Wasmtime](https://wasmtime.dev/) or
@@ -69,27 +70,103 @@ wasmtime run --dir . -- dotnet.wasm HelloWasiConsole
 Hello, Wasi Console!
 ```
 
-<!-- ## Create a single wasm file for the app
+## Create a single wasm file for the app
 
 So far, we relied on `dotnet.wasm`, a standard build of the .NET runtime for
 Wasm to load your and run your apps. Instead, you can create a single Wasm file
 to contain the application.
 
-Change the `HelloWasiConsole.csproj` to add `WasmSingleFileBundler`:
+Change the `HelloWasiConsole.csproj` to the following:
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <RuntimeIdentifier>wasi-wasm</RuntimeIdentifier>
+    <!-- <RuntimeIdentifier>wasi-wasm</RuntimeIdentifier> -->
     <OutputType>Exe</OutputType>
-    <PublishTrimmed>true</PublishTrimmed>
-    <WasmSingleFileBundle>true</WasmSingleFileBundle> 
+    <!-- <PublishTrimmed>true</PublishTrimmed> -->
   </PropertyGroup>
 </Project>
--->
+```
+
+Add the `Wasi.Sdk` package:
+
+```sh
+dotnet add package Wasi.Sdk --prerelease
+```
+
+Build:
+
+```sh
+dotnet build
+
+  HelloWasiConsole -> /Users/atamel/dev/github/meteatamel/wasm-basics/samples/dotnet8-wasm/HelloWasiConsole/bin/Debug/net8.0/HelloWasiConsole.wasm
+```
+
+This creates a standalone `wasm` file. You can run it using a Wasm runtime such
+as `wasmtime`:
+
+```sh
+wasmtime bin/Debug/net8.0/HelloWasiConsole.wasm
+
+Hello, Wasi Console!
+```
+
+Or in `wasmedge`:
+
+```sh
+wasmedge bin/Debug/net8.0/HelloWasiConsole.wasm
+
+Hello, Wasi Console!
+```
+
+## Configure Docker for Wasm
+
+Make sure Docker Desktop has `containerd` enabled.
+
+Go to `Settings` => `Features in development` => Check: `Use containerd for pulling and storing images`
+
+## Wrap the Wasm app into an OCI image
+
+Get a release build:
+
+```sh
+dotnet publish -c Release
+```
+
+Create a `Dockerfile`:
+
+```Dockerfile
+FROM scratch
+COPY ./bin/Release/net8.0/HelloWasiConsole.wasm  /HelloWasiConsole.wasm
+ENTRYPOINT [ "HelloWasiConsole.wasm" ]
+```
+
+Build the image:
+
+```sh
+docker buildx build -t meteatamel/hello-wasm:0.1 .
+```
+
+Run the image locally:
+
+```sh
+docker run --rm --runtime=io.containerd.wasmedge.v1 meteatamel/hello-wasm:0.1
+
+Hello, Wasi Console!
+```
+
+Push the image to DockerHub:
+
+```sh
+docker image push meteatamel/hello-wasm:0.1
+```
 
 ## References
 
 * [Experiments with the new WASI workload in .NET 8 Preview
   4](https://youtu.be/gKX-cdqnb8I)
+* [Bringing WebAssembly to the .NET Mainstream - Steve Sanderson,
+  Microsoft](https://youtu.be/PIeYw7kJUIg?list=PLj6h78yzYM2Ni0u-ONljTkv4uOutyjwq9)
+* [Experimental WASI SDK for .NET
+  Core](https://github.com/SteveSandersonMS/dotnet-wasi-sdk#how-to-use-aspnet-core-applications)

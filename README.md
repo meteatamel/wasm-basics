@@ -1,4 +1,4 @@
-# WebAssembly Basics
+# WebAssembly outside the browser
 
 ![WebAssembly Logo](https://avatars.githubusercontent.com/u/11578470?s=200&v=4)
 
@@ -147,5 +147,5 @@ provides the context.
 These are some samples in this repo:
 
 * [rust-wasm](./samples/rust-wasm/) - Running Rust on Wasm in Docker.
-* [dotnet8-wasm](./samples/dotnet-wasm) - Running .NET 8 (preview) on Wasm.
+* [dotnet8-wasm](./samples/dotnet-wasm) - Running .NET 8 (preview) on Wasm in Docker.
 * [python-spin-wasm](./samples/python-spin-wasm) - Running Python with Spin on Wasm.
