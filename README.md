@@ -142,6 +142,12 @@ from Fermyon and [The Complex World of Wasm Language
 Support](https://www.fermyon.com/blog/complex-world-of-wasm-language-support)
 provides the context.
 
+It's not so clear what languages are really supported on Wasm/Wasi outside the
+browser at what level. Most languages, such as .NET, are experimental with
+Wasm/Wasi support at best and changing constantly. Other languages, like Java,
+have some support for Wasm via projects like TeaVM but geared more towards
+browsers.
+
 ## Samples
 
 These are some samples in this repo:
@@ -150,3 +156,47 @@ These are some samples in this repo:
 * [dotnet8-wasm](./samples/dotnet-wasm) - Running .NET 8 (preview) on Wasm in Docker.
 * [hello-wagi](./samples/hello-wagi) - Running WASI binaries as HTTP handlers with WAGI.
 * [python-spin-wasm](./samples/python-spin-wasm) - Running Python with Spin on Wasm.
+
+## References
+
+WASI:
+
+* [https://wasi.dev/](https://wasi.dev/)
+* [Standardizing WASI: A system interface to run WebAssembly outside the web](https://hacks.mozilla.org/2019/03/standardizing-wasi-a-webassembly-system-interface/)
+
+Docker + Wasm:
+
+* [Announcing Docker+Wasm Technical Preview 2](https://www.docker.com/blog/announcing-dockerwasm-technical-preview-2/)
+* [Introducing the Docker+Wasm Technical Preview](https://www.docker.com/blog/docker-wasm-technical-preview/)
+* [Docker + Wasm (Beta)](https://docs.docker.com/desktop/wasm/) 
+
+Azure + Wasm:
+
+* [Create WebAssembly System Interface (WASI) node pools in Azure Kubernetes Service (AKS) to run your WebAssembly (WASM) workload (preview)](https://learn.microsoft.com/en-us/azure/aks/use-wasi-node-pools)
+
+Nigel Poulton’s blog:
+
+* [WebAssembly: The future of cloud computing](https://nigelpoulton.com/webassembly-the-future-of-cloud-computing/)
+* [What is cloud native WebAssembly?](https://nigelpoulton.com/what-is-cloud-native-webassembly/)
+* [What is runwasi?](https://nigelpoulton.com/what-is-runwasi/)
+* [Getting started with Docker + Wasm](https://nigelpoulton.com/getting-started-with-docker-and-wasm/)
+
+Wasm By Example:
+
+* [WASI Introduction](https://wasmbyexample.dev/examples/wasi-introduction/wasi-introduction.all.en-us.html)
+* [WASI Hello World](https://wasmbyexample.dev/examples/wasi-hello-world/wasi-hello-world.rust.en-us.html)
+
+WebAssembly for different languages:
+
+* [WebAssembly support in Top 20 languages by
+  Fermyon](https://www.fermyon.com/wasm-languages/webassembly-language-support)
+* [Enarx - WebAssembly Introduction](https://enarx.dev/docs/WebAssembly/Introduction)
+* [WASI support on .NET 8](https://twitter.com/stevensanderson/status/1658845798212202496?s=46&t=qBzme20QIA50uklBQV_ArA): https://twitter.com/stevensanderson/status/1658845798212202496?s=46&t=qBzme20QIA50uklBQV\_ArA
+* [The JVM Meets WASI: Writing Cloud-Friendly Wasm Apps Using Java and Friends -
+  Joel Dice](https://youtu.be/MFruf7aqcbE)
+
+Talks at Cloud Native Wasm Days:
+
+* [Cloud Native Wasm Day EU 2023](https://colocatedeventseu2023.sched.com/) in [this playlist](https://www.youtube.com/playlist?list=PLj6h78yzYM2Pdj8vnO0wfFyKcbKNy3e5j).
+* [Cloud Native Wasm Day North America 2022](https://cloudnativewasmdayna22.sched.com/) in [this playlist](https://www.youtube.com/playlist?list=PLj6h78yzYM2PzLhPvZIihwPShNuXP01C5)
+* [Cloud Native Wasm Day EU 2022 ](https://cloudnativewasmdayeu22.sched.com/)in this [playlist](https://www.youtube.com/playlist?list=PLj6h78yzYM2Ni0u-ONljTkv4uOutyjwq9)
