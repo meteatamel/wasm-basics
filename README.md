@@ -153,7 +153,8 @@ browsers.
 These are some samples in this repo:
 
 * [rust-wasm](./samples/rust-wasm/) - Running Rust on Wasm in Docker.
-* [dotnet8-wasm](./samples/dotnet-wasm) - Running .NET 8 (preview) on Wasm in Docker.
+* [dotnet8-wasm](./samples/dotnet8-wasm/) - Running .NET 8 (preview) on Wasm in Docker.
+* [go-wasm](./samples/go-wasm/) - Running Go on Wasm.
 * [hello-wagi](./samples/hello-wagi) - Running WASI binaries as HTTP handlers with WAGI.
 * [python-spin-wasm](./samples/python-spin-wasm) - Running Python with Spin on Wasm.
 
