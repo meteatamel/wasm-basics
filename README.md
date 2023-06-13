@@ -7,14 +7,14 @@ WebAssembly (Wasm) outside the browser.
 
 ## WebAssembly: Why? What?
 
-### Wasm in the browser
+### What is WebAssembly?
 
-[WebAssembly](https://webassembly.org/) (Wasm) is a technology that allows you
-to compile code written in over 40+ languages and run it inside sandboxed
-environments in a fast, efficient, and safe way. The original use cases were
-focused on running native code in web browsers and supported by all major
-browsers. For example, there are frameworks like Blazor that enable running C# /
-ASP.NET code in the browser running on .NET runtime implemented in WebAssembly.
+[WebAssembly](https://webassembly.org/) (Wasm) is a binary instruction format
+for a stack-based *virtual machine* and a *portable compilation target* for
+programming languages.
+
+The original use cases were focused on running native code in web browsers in a
+fast, portable, and secure way. Supported by all major browsers.
 
 ### Wasm outside the browser
 
@@ -23,8 +23,8 @@ with the [WASI](https://wasi.dev/) project. The idea is instead of running apps
 as VMs or containers, you can run them as faster, smaller, more secure, and more
 portable WebAssembly modules:
 
-* **Faster**: Wasm apps start 10x to 500x faster than containers with no cold-start. 
-* **Smaller**: A HelloWorld Rust app in Wasm is 10x smaller than in an OCI container.
+* **Faster**: Wasm apps start much faster than containers with no cold-start.
+* **Smaller**: A HelloWorld Rust app in Wasm is much smaller than in an OCI container.
 * **More secure**: Containers execute in an allow-by-default model whereas Wasm apps execute in a deny-by-default sandbox.
 * **More portable**: A container built for `linux/amd64` won’t work on
   `windows/amd64` or even `linux/arm64`. Wasm creates a single `wasm32/wasi`
@@ -152,9 +152,10 @@ browsers.
 
 These are some samples in this repo:
 
-* [rust-wasm](./samples/rust-wasm/) - Running Rust on Wasm in Docker.
-* [dotnet8-wasm](./samples/dotnet8-wasm/) - Running .NET 8 (preview) on Wasm in Docker.
+* [rust-wasm](./samples/rust-wasm/) - Running Rust on Wasm.
+* [dotnet8-wasm](./samples/dotnet8-wasm/) - Running .NET 8 (preview) on Wasm.
 * [go-wasm](./samples/go-wasm/) - Running Go on Wasm.
+* [rust-wasm-docker](./samples/rust-wasm-docker/) - Running Rust on Wasm in Docker.
 * [hello-wagi](./samples/hello-wagi) - Running WASI binaries as HTTP handlers with WAGI.
 * [python-spin-wasm](./samples/python-spin-wasm) - Running Python with Spin on Wasm.
 
@@ -192,7 +193,7 @@ WebAssembly for different languages:
 * [WebAssembly support in Top 20 languages by
   Fermyon](https://www.fermyon.com/wasm-languages/webassembly-language-support)
 * [Enarx - WebAssembly Introduction](https://enarx.dev/docs/WebAssembly/Introduction)
-* [WASI support on .NET 8](https://twitter.com/stevensanderson/status/1658845798212202496?s=46&t=qBzme20QIA50uklBQV_ArA): https://twitter.com/stevensanderson/status/1658845798212202496?s=46&t=qBzme20QIA50uklBQV\_ArA
+* [WASI support on .NET 8](https://twitter.com/stevensanderson/status/1658845798212202496?s=46&t=qBzme20QIA50uklBQV_ArA)
 * [The JVM Meets WASI: Writing Cloud-Friendly Wasm Apps Using Java and Friends -
   Joel Dice](https://youtu.be/MFruf7aqcbE)
 

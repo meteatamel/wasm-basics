@@ -1,8 +1,7 @@
-# Running Rust on Wasm in Docker
+# Running Rust on Wasm
 
 ## Prerequisites
 
-* You have Docker Desktop 4.15 or later.
 * You have Rust [installed](https://www.rust-lang.org/tools/install).
 * You have a Wasm runtime installed, for example
   [Wasmtime](https://wasmtime.dev/) or
@@ -41,11 +40,26 @@ rustup target add wasm32-wasi
 
 ## Build and run HelloWorld app in Wasm
 
-Change the message in `main.rs` to the following:
+Change the `main.rs` to access the filesystem:
 
 ```rust
+use std::io::prelude::*;
+use std::fs;
+
 fn main() {
     println!("Hello, Wasm!");
+
+    // Create a file
+    // We are creating a `helloworld.txt` file in the `/helloworld` directory
+    // This code requires the Wasi host to provide a `/helloworld` directory on the guest.
+    // If the `/helloworld` directory is not available, the unwrap() will cause this program to panic.
+    // For example, in Wasmtime, if you want to map the current directory to `/helloworld`,
+    // invoke the runtime with the flag/argument: `--mapdir /helloworld::.`
+    // This will map the `/helloworld` directory on the guest, to  the current directory (`.`) on the host
+    let mut file = fs::File::create("/helloworld/helloworld.txt").unwrap();
+
+    // Write the text to the file we created
+    write!(file, "Hello world!\n").unwrap();
 }
 ```
 
@@ -55,59 +69,25 @@ Build for Wasm/Wasi:
 cargo build --target wasm32-wasi
 ```
 
-Run in a Wasm runtime such as `wasmtime`:
+Run in a Wasm runtime such as `wasmtime` giving it access to the current
+directory on host to `/helloworld` directory on the guest:
 
 ```sh
-wasmtime target/wasm32-wasi/debug/hello-wasm.wasm
+wasmtime --mapdir /helloworld::. target/wasm32-wasi/debug/hello-wasm.wasm
 
 Hello, Wasm!
 ```
+
+You should also see a `helloworld.txt` file created.
 
 Or in `wasmedge`:
 
 ```sh
-wasmedge target/wasm32-wasi/debug/hello-wasm.wasm
+wasmedge --dir /helloworld:. target/wasm32-wasi/debug/hello-wasm.wasm
 
 Hello, Wasm!
-```
-
-## Configure Docker for Wasm
-
-Make sure Docker Desktop has `containerd` enabled.
-
-Go to `Settings` => `Features in development` => Check: `Use containerd for pulling and storing images`
-
-## Wrap the Wasm app into an OCI image
-
-Create a `Dockerfile`:
-
-```Dockerfile
-FROM scratch
-COPY ./target/wasm32-wasi/debug/hello-wasm.wasm /hello-wasm.wasm
-ENTRYPOINT [ "hello-wasm.wasm" ]
-```
-
-Build the image:
-
-```sh
-docker buildx build -t meteatamel/hello-wasm:0.1 .
-```
-
-Run the image locally:
-
-```sh
-docker run --rm --runtime=io.containerd.wasmedge.v1 meteatamel/hello-wasm:0.1
-
-Hello, Wasm!
-```
-
-Push the image to DockerHub:
-
-```sh
-docker image push meteatamel/hello-wasm:0.1
 ```
 
 ## References
 
-* [Getting started with Docker + Wasm](https://nigelpoulton.com/getting-started-with-docker-and-wasm/)
-* [WASM + Docker HelloWorld](https://blog.devgenius.io/wasm-docker-hello-world-2ac6a456ddd4)
+* [Wasm by Example - Rust](https://wasmbyexample.dev/examples/wasi-hello-world/wasi-hello-world.rust.en-us.html)

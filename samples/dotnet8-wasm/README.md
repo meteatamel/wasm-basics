@@ -1,8 +1,7 @@
-# Running .NET 8 (preview) on Wasm in Docker
+# Running .NET 8 (preview) on Wasm
 
 ## Prerequisites
 
-* You have Docker Desktop 4.15 or later.
 * You have .NET 8 Preview 4 [installed](https://dotnet.microsoft.com/en-us/download/dotnet/8.0).
 * You have a Wasm runtime installed, for example
   [Wasmtime](https://wasmtime.dev/) or
@@ -118,48 +117,6 @@ Or in `wasmedge`:
 wasmedge bin/Debug/net8.0/HelloWasiConsole.wasm
 
 Hello, Wasi Console!
-```
-
-## Configure Docker for Wasm
-
-Make sure Docker Desktop has `containerd` enabled.
-
-Go to `Settings` => `Features in development` => Check: `Use containerd for pulling and storing images`
-
-## Wrap the Wasm app into an OCI image
-
-Get a release build:
-
-```sh
-dotnet publish -c Release
-```
-
-Create a `Dockerfile`:
-
-```Dockerfile
-FROM scratch
-COPY ./bin/Release/net8.0/HelloWasiConsole.wasm  /HelloWasiConsole.wasm
-ENTRYPOINT [ "HelloWasiConsole.wasm" ]
-```
-
-Build the image:
-
-```sh
-docker buildx build -t meteatamel/hello-wasm:0.1 .
-```
-
-Run the image locally:
-
-```sh
-docker run --rm --runtime=io.containerd.wasmedge.v1 meteatamel/hello-wasm:0.1
-
-Hello, Wasi Console!
-```
-
-Push the image to DockerHub:
-
-```sh
-docker image push meteatamel/hello-wasm:0.1
 ```
 
 ## References
