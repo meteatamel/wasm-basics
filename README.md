@@ -138,7 +138,9 @@ Azure AKS is also previewing Wasm node pools using `runwasi`. Currently, there a
 
 Here’s a [comprehensive list of
 languages](https://www.fermyon.com/wasm-languages/webassembly-language-support)
-from Fermyon and [The Complex World of Wasm Language
+from Fermyon and [WASI language support (part
+1)](https://blog.enarx.dev/language-support-for-wasi/) from Enarx. [The Complex World of
+Wasm Language
 Support](https://www.fermyon.com/blog/complex-world-of-wasm-language-support)
 provides the context.
 
@@ -176,12 +178,20 @@ Azure + Wasm:
 
 * [Create WebAssembly System Interface (WASI) node pools in Azure Kubernetes Service (AKS) to run your WebAssembly (WASM) workload (preview)](https://learn.microsoft.com/en-us/azure/aks/use-wasi-node-pools)
 
+Fermyon blog:
+
+* [The Four Domains of Wasm](https://www.fermyon.com/blog/four-domains-wasm)
+* [WebAssembly Support in Top 20
+  Languages](https://www.fermyon.com/wasm-languages/webassembly-language-support).
+
+
 Nigel Poulton’s blog:
 
 * [WebAssembly: The future of cloud computing](https://nigelpoulton.com/webassembly-the-future-of-cloud-computing/)
 * [What is cloud native WebAssembly?](https://nigelpoulton.com/what-is-cloud-native-webassembly/)
 * [What is runwasi?](https://nigelpoulton.com/what-is-runwasi/)
 * [Getting started with Docker + Wasm](https://nigelpoulton.com/getting-started-with-docker-and-wasm/)
+* [WebAssembly and containerd: How it works](https://nigelpoulton.com/webassembly-and-containerd-how-it-works/)
 
 Wasm By Example:
 
@@ -192,6 +202,7 @@ WebAssembly for different languages:
 
 * [WebAssembly support in Top 20 languages by
   Fermyon](https://www.fermyon.com/wasm-languages/webassembly-language-support)
+* [WASI language support (part 1)](https://blog.enarx.dev/language-support-for-wasi/)
 * [Enarx - WebAssembly Introduction](https://enarx.dev/docs/WebAssembly/Introduction)
 * [WASI support on .NET 8](https://twitter.com/stevensanderson/status/1658845798212202496?s=46&t=qBzme20QIA50uklBQV_ArA)
 * [The JVM Meets WASI: Writing Cloud-Friendly Wasm Apps Using Java and Friends -
