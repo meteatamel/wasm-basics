@@ -60,15 +60,6 @@ wasmtime ./bin/Debug/net8.0/HelloWagi.wasm
 Hello, World!
 ```
 
-You can also run directly with a Wasm runtime such as `wasmtime`:
-
-```sh
-cd /Users/atamel/dev/github/meteatamel/wasm-basics/samples/dotnet-wasm/HelloWasiConsole/bin/Debug/net8.0/wasi-wasm/AppBundle
-wasmtime run --dir . -- dotnet.wasm HelloWasiConsole
-
-Hello, Wasi Console!
-```
-
 ## Run as a WAGI module
 
 To run this sample with WAGI, create a simple `modules.toml` file that maps
