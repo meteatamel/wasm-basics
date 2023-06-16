@@ -38,8 +38,6 @@ Wasm code outside of a browser needs a way to talk to the system — a syste
 interface and that’s what [WebAssembly System Interface](https://wasi.dev/)
 (WASI) provides. Wasm runtimes implement WASI.
 
-![WASI architecture](https://github.com/bytecodealliance/wasmtime/raw/main/docs/wasi-software-architecture.png)
-
 A lot of WASI is still in proposals and limited. For example, networking is not
 yet part of the WASI standard (so, no socket support in your Wasm module).
 However, some Wasm runtimes like `wasmedge` (see [WasmEdge WASI
@@ -157,6 +155,8 @@ These are some samples in this repo:
 * [rust-wasm](./samples/rust-wasm/) - Running Rust on Wasm.
 * [dotnet8-wasm](./samples/dotnet8-wasm/) - Running .NET 8 (preview) on Wasm.
 * [go-wasm](./samples/go-wasm/) - Running Go on Wasm.
+* [kotlin-wasm](https://github.com/jamesward/hello-kotlin-wasm/tree/wasi) -
+  Running Kotlin on Wasm with kowasm by James Ward.
 * [rust-wasm-docker](./samples/rust-wasm-docker/) - Running Rust on Wasm in Docker.
 * [hello-wagi](./samples/hello-wagi) - Running WASI binaries as HTTP handlers with WAGI.
 * [python-spin-wasm](./samples/python-spin-wasm) - Running Python with Spin on Wasm.
@@ -183,7 +183,6 @@ Fermyon blog:
 * [The Four Domains of Wasm](https://www.fermyon.com/blog/four-domains-wasm)
 * [WebAssembly Support in Top 20
   Languages](https://www.fermyon.com/wasm-languages/webassembly-language-support).
-
 
 Nigel Poulton’s blog:
 
