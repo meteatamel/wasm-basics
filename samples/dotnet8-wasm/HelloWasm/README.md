@@ -21,5 +21,5 @@ dotnet run -c Debug/Release
 Or directly start node from the AppBundle directory:
 
 ```
-wasmtime bin/$(Configuration)/net8.0/browser-wasm/AppBundle/HelloWasiConsole.wasm
+wasmtime bin/$(Configuration)/net8.0/browser-wasm/AppBundle/HelloWasm.wasm
 ```

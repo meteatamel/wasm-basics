@@ -40,13 +40,13 @@ Wasi Console App  wasiconsole  [C#]      Wasi/WasiConsole
 Create a new `Wasi Console App` using the template:
 
 ```sh
-dotnet new wasiconsole -o HelloWasiConsole
+dotnet new wasiconsole -o HelloWasm
 ```
 
 Build:
 
 ```sh
-cd HelloWasiConsole
+cd HelloWasm
 dotnet build
 ```
 
@@ -55,27 +55,54 @@ Run:
 ```sh
 dotnet run
 
-Running: wasmtime run --dir . -- dotnet.wasm HelloWasiConsole
-Using working directory: /Users/atamel/dev/github/meteatamel/wasm-basics/samples/dotnet-wasm/HelloWasiConsole/bin/Debug/net8.0/wasi-wasm/AppBundle
+Running: wasmtime run --dir . -- dotnet.wasm HelloWasm
+Using working directory: /Users/atamel/dev/github/meteatamel/wasm-basics/samples/dotnet-wasm/HelloWasm/bin/Debug/net8.0/wasi-wasm/AppBundle
 Hello, Wasi Console!
 ```
 
 You can also run directly with a Wasm runtime such as `wasmtime`:
 
 ```sh
-cd /Users/atamel/dev/github/meteatamel/wasm-basics/samples/dotnet-wasm/HelloWasiConsole/bin/Debug/net8.0/wasi-wasm/AppBundle
-wasmtime run --dir . -- dotnet.wasm HelloWasiConsole
+cd /Users/atamel/dev/github/meteatamel/wasm-basics/samples/dotnet-wasm/HelloWasm/bin/Debug/net8.0/wasi-wasm/AppBundle
+wasmtime run --dir . -- dotnet.wasm HelloWasm
 
 Hello, Wasi Console!
 ```
 
-## Create a single wasm file for the app
+## Change app to access filesytem
+
+Chane `Program.cs` to access the filesystem:
+
+```csharp
+using System;
+using System.IO;
+
+Console.WriteLine("Hello, Wasm!");
+
+// Create a file
+// We are creating a `helloworld.txt` file in the `/helloworld` directory
+// This code requires the Wasi host to provide a `/helloworld` directory on the guest.
+// If the `/helloworld` directory is not available, the `File.WriteAllText()` will fail.
+// For example, in Wasmtime, if you want to map the current directory to `/helloworld`,
+// invoke the runtime with the flag/argument: `--mapdir /helloworld::.`
+// This will map the `/helloworld` directory on the guest, to  the current directory (`.`) on the host
+string path = "/helloworld/helloworld.txt";
+string content = "Hello world!\n";
+using (StreamWriter sw = File.CreateText(path))
+{
+    sw.Write(content);
+}
+
+Console.WriteLine("Created helloworld.txt");
+```
+
+## Create a single Wasm file for the app
 
 So far, we relied on `dotnet.wasm`, a standard build of the .NET runtime for
 Wasm to load your and run your apps. Instead, you can create a single Wasm file
 to contain the application.
 
-Change the `HelloWasiConsole.csproj` to the following:
+Change the `HelloWasm.csproj` to the following:
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
@@ -94,29 +121,30 @@ Add the `Wasi.Sdk` package:
 dotnet add package Wasi.Sdk --prerelease
 ```
 
-Build:
+Build for Wasm+Wasi:
 
 ```sh
 dotnet build
 
-  HelloWasiConsole -> /Users/atamel/dev/github/meteatamel/wasm-basics/samples/dotnet8-wasm/HelloWasiConsole/bin/Debug/net8.0/HelloWasiConsole.wasm
+  HelloWasm -> /Users/atamel/dev/github/meteatamel/wasm-basics/samples/dotnet8-wasm/HelloWasm/bin/Debug/net8.0/HelloWasm.wasm
 ```
 
-This creates a standalone `wasm` file. You can run it using a Wasm runtime such
-as `wasmtime`:
+Run in a Wasm runtime such as `wasmtime`:
 
 ```sh
-wasmtime bin/Debug/net8.0/HelloWasiConsole.wasm
+wasmtime --mapdir /helloworld::. bin/Debug/net8.0/HelloWasm.wasm
 
-Hello, Wasi Console!
+Hello, Wasm!
+Created helloworld.txt
 ```
 
-Or in `wasmedge`:
+You can try another Wasm runtime like `wasmedge`:
 
 ```sh
-wasmedge bin/Debug/net8.0/HelloWasiConsole.wasm
+wasmedge --dir /helloworld:. bin/Debug/net8.0/HelloWasm.wasm
 
-Hello, Wasi Console!
+Hello, Wasm!
+Created helloworld.txt
 ```
 
 ## References

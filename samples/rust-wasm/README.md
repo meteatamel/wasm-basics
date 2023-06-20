@@ -7,30 +7,7 @@
   [Wasmtime](https://wasmtime.dev/) or
   [WasmEdge](https://wasmedge.org/book/en/quick_start/install.html).
 
-## Create, build, and run a HelloWorld app
-
-Create:
-
-```sh
-cargo new hello-wasm
-```
-
-Build:
-
-```sh
-cd hello-wasm
-cargo build
-```
-
-Run:
-
-```sh
-./target/debug/hello-wasm
-
-Hello, world!
-```
-
-## Configure Rust to compile to Wasm
+## Configure Rust for Wasm
 
 Add `wasm32-wasi` target:
 
@@ -38,7 +15,14 @@ Add `wasm32-wasi` target:
 rustup target add wasm32-wasi
 ```
 
-## Build and run HelloWorld app in Wasm
+## Create, build, and run an app in Wasm+Wasi
+
+Create:
+
+```sh
+cargo new hello-wasm
+cd hello-wasm
+```
 
 Change the `main.rs` to access the filesystem:
 
@@ -60,32 +44,33 @@ fn main() {
 
     // Write the text to the file we created
     write!(file, "Hello world!\n").unwrap();
+
+    println!("Created helloworld.txt");
 }
 ```
 
-Build for Wasm/Wasi:
+Build for Wasm+Wasi:
 
 ```sh
 cargo build --target wasm32-wasi
 ```
 
-Run in a Wasm runtime such as `wasmtime` giving it access to the current
-directory on host to `/helloworld` directory on the guest:
+Run in a Wasm runtime such as `wasmtime`:
 
 ```sh
 wasmtime --mapdir /helloworld::. target/wasm32-wasi/debug/hello-wasm.wasm
 
 Hello, Wasm!
+Created helloworld.txt
 ```
 
-You should also see a `helloworld.txt` file created.
-
-Or in `wasmedge`:
+You can try another Wasm runtime like `wasmedge`:
 
 ```sh
 wasmedge --dir /helloworld:. target/wasm32-wasi/debug/hello-wasm.wasm
 
 Hello, Wasm!
+Created helloworld.txt
 ```
 
 ## References

@@ -19,4 +19,6 @@ fn main() {
 
     // Write the text to the file we created
     write!(file, "Hello world!\n").unwrap();
+
+    println!("Created helloworld.txt");
 }
