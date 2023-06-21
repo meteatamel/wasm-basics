@@ -28,10 +28,9 @@ Move to `/usr/local/bin`:
 sudo mv ./wagi /usr/local/bin/wagi
 ```
 
-## Create a console app and compile for Wasm/Wasi
+## Create a .NET app for WAGI
 
-This console app can be in any language that can compile to Wasm/Wasi. For this
-sample, let's use a .NET console app.
+For this sample, let's use a .NET console app.
 
 ```sh
 dotnet new console -n HelloWagi
@@ -42,6 +41,15 @@ Add `Wasi.Sdk` package:
 ```sh
 cd HelloWagi
 dotnet add package Wasi.Sdk --prerelease
+```
+
+Change `Program.cs` to print the content type and an empty line (required for
+WAGI) and also change the message:
+
+```csharp
+Console.WriteLine("Content-Type: text/plain");
+Console.WriteLine();
+Console.WriteLine("Hello WAGI from C#!");
 ```
 
 Build:
@@ -57,34 +65,61 @@ Run in a Wasm runtime:
 ```sh
 wasmtime ./bin/Debug/net8.0/HelloWagi.wasm
 
-Hello, World!
+Content-Type: text/plain
+
+Hello WAGI from C#!
 ```
 
-## Run as a WAGI module
+## Create a Go app for WAGI
 
-To run this sample with WAGI, create a simple `modules.toml` file that maps
-paths to a Wasm module:
+For this sample, let's use a Go console app.
 
-```
-[[module]]
-route = "/"
-module = "bin/Debug/net8.0/HelloWagi.wasm"
-```
+Create `hello-wagi.go` to print the content type and an empty line (required for
+WAGI) and also a message:
 
-Change `Program.cs` to add the following at the beginning of the console app to
-print the content type and an empty line. Also change the message to `Hello,
-WAGI`:
+```go
+package main
 
-```csharp
-Console.WriteLine("Content-Type: text/plain");
-Console.WriteLine();
-Console.WriteLine("Hello, WAGI!");
+import (
+  "fmt"
+)
+
+func main() {
+  fmt.Println("Content-Type: text/plain");
+  fmt.Println();
+  fmt.Println("Hello WAGI from Go!")
+}
 ```
 
 Build:
 
 ```sh
-dotnet build
+tinygo build -target=wasi hello-wagi.go
+```
+
+Run in a Wasm runtime:
+
+```sh
+wasmtime ./hello-wagi.wasm
+
+Content-Type: text/plain
+
+Hello WAGI from Go!
+```
+
+## Run as a WAGI module
+
+To run these samples with WAGI, create a simple `modules.toml` file that maps
+paths to Wasm modules:
+
+```yaml
+[[module]]
+route = "/csharp"
+module = "HelloWagi/bin/Debug/net8.0/HelloWagi.wasm"
+
+[[module]]
+route = "/go"
+module = "hello-wagi.wasm"
 ```
 
 Run as a WAGI module:
@@ -95,10 +130,14 @@ wagi -c modules.toml
 Ready: serving on http://127.0.0.1:3000
 ```
 
-In a seperate terminal, you can hit the url:
+In a separate terminal, you can curl different paths to hit different modules:
 
 ```sh
-curl http://localhost:3000
+curl http://localhost:3000/csharp
 
-Hello, WAGI!
+Hello WAGI from C#!
+
+curl http://localhost:3000/go
+
+Hello WAGI from Go!
 ```

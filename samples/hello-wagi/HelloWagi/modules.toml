@@ -1,3 +1,0 @@
-[[module]]
-route = "/"
-module = "bin/Debug/net8.0/HelloWagi.wasm"

@@ -1,0 +1,7 @@
+[[module]]
+route = "/csharp"
+module = "HelloWagi/bin/Debug/net8.0/HelloWagi.wasm"
+
+[[module]]
+route = "/go"
+module = "hello-wagi.wasm"
