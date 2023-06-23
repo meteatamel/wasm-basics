@@ -43,7 +43,7 @@ brew link binaryen
 
 ## Create, build, and run an app in Wasm+Wasi
 
-Create `hello-wasm.go` to access the filesystem:
+Create [hello-wasm.go](./hello-wasm.go) to access the filesystem:
 
 ```go
 package main
@@ -100,4 +100,72 @@ wasmedge --dir /helloworld:. hello-wasm.wasm
 
 Hello, Wasm!
 Created helloworld.txt
+```
+
+## Running HTTP in Wasm+Wasi
+
+You might think that you can compile and run any Go app to Wasm+Wasi but this is
+not true. Wasi preview1 does not support sockets yet. 
+
+To show this, create a simple HelloWorld HTTP server in [hello-http.go](./hello-http.go):
+
+```go
+package main
+
+import (
+  "fmt"
+  "log"
+  "net/http"
+)
+
+func handler(w http.ResponseWriter, r *http.Request) {
+  log.Println("Request received:", r.Method, r.URL.Path)
+  fmt.Fprint(w, "Hello World!")
+}
+
+func main() {
+  http.HandleFunc("/", handler)
+  log.Println("Server started. Listening on :8080...")
+
+  if err := http.ListenAndServe(":8080", nil); err != nil {
+    log.Fatalf("ListenAndServe error:%s ", err.Error())
+  }
+}
+```
+
+Build with Go:
+
+```sh
+GOOS=wasip1 GOARCH=wasm go1.21rc2 build -o hello-http.wasm hello-http.go
+```
+
+Run with `wasmtime`:
+
+```sh
+wasmtime run hello-http.wasm
+```
+
+And you get an error because sockets are not supported yet:
+
+```sh
+2023/06/23 10:41:06 Server started. Listening on :8080...
+fatal error: all goroutines are asleep - deadlock!
+
+goroutine 1 [chan receive]:
+net.(*fakeNetFD).accept(...)
+        /Users/atamel/sdk/go1.21rc2/src/net/net_fake.go:231
+net.(*netFD).accept(0x144e2c0)
+        /Users/atamel/sdk/go1.21rc2/src/net/fd_wasip1.go:88 +0x44
+net.(*TCPListener).accept(0x142a0e0)
+        /Users/atamel/sdk/go1.21rc2/src/net/tcpsock_posix.go:152 +0x4
+net.(*TCPListener).Accept(0x142a0e0)
+        /Users/atamel/sdk/go1.21rc2/src/net/tcpsock.go:315 +0x8
+net/http.(*Server).Serve(0x1474000, {0xc2138, 0x142a0e0})
+        /Users/atamel/sdk/go1.21rc2/src/net/http/server.go:3056 +0x30
+net/http.(*Server).ListenAndServe(0x1474000)
+        /Users/atamel/sdk/go1.21rc2/src/net/http/server.go:2985 +0x10
+net/http.ListenAndServe(...)
+        /Users/atamel/sdk/go1.21rc2/src/net/http/server.go:3239
+main.main()
+        /Users/atamel/dev/github/meteatamel/wasm-basics/samples/go-wasm/hello-http.go:18 +0xe
 ```
