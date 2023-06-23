@@ -2,14 +2,25 @@
 
 ## Prerequisites
 
-* You have [tinygo](https://tinygo.org/getting-started/install/) (or Go 1.21 when it's available) installed.
+* You have [Go 1.21 RC](https://go.dev/blog/go1.21rc) or [tinygo](https://tinygo.org/getting-started/install/) installed.
 * You have a Wasm runtime installed, for example
   [Wasmtime](https://wasmtime.dev/) or
   [WasmEdge](https://wasmedge.org/book/en/quick_start/install.html).
 
 ## Configure Go for Wasm
 
-Currently, Go does not support Wasm but TinyGo does. Make sure you have it:
+Currently, Go does not support Wasm but Go 1.21 RC and TinyGo does. I show how
+to use both.
+
+Make sure you have Go 1.21 RC installed:
+
+```sh
+go1.21rc2 version
+
+go version go1.21rc2 darwin/amd64
+```
+
+Or if you prefer TinyGo, make sure you have it:
 
 ```sh
 tinygo version
@@ -61,7 +72,13 @@ func main() {
 }
 ```
 
-Build for Wasm+Wasi:
+Build with Go:
+
+```sh
+GOOS=wasip1 GOARCH=wasm go1.21rc2 build -o hello-wasm.wasm hello-wasm.go
+```
+
+Or, build with TinyGo:
 
 ```sh
 tinygo build -target=wasi hello-wasm.go
@@ -76,7 +93,7 @@ Hello, Wasm!
 Created helloworld.txt
 ```
 
-You can try another Wasm runtime like `wasmedge`:
+Or, run in another Wasm runtime such as `wasmedge`:
 
 ```sh
 wasmedge --dir /helloworld:. hello-wasm.wasm
