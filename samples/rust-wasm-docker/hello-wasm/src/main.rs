@@ -2,7 +2,7 @@ use std::{thread, time};
 
 fn main() {
     println!("Hello, Wasm before!");
-    let three_seconds = time::Duration::from_secs(3);
-    thread::sleep(three_seconds);
+    let duration = time::Duration::from_secs(10);
+    thread::sleep(duration);
     println!("Hello, Wasm after!");
 }
