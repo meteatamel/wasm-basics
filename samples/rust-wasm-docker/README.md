@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-* You have Docker Desktop 4.15 or later.
+* You have Docker Desktop v4.21.0 or later.
 * You have Rust [installed](https://www.rust-lang.org/tools/install).
 * You have a Wasm runtime installed, for example
   [Wasmtime](https://wasmtime.dev/) or
@@ -80,10 +80,11 @@ Hello, Wasm after!
 
 ## Configure Docker for Wasm
 
-Make sure Docker Desktop has `containerd` enabled.
+Make sure Docker Desktop has `containerd` and `Wasm` enabled. Go to `Settings`
+=> `Features in development`:
 
-Go to `Settings` => `Features in development` => Check: `Use containerd for
-pulling and storing images`
+* Check: `Use containerd for pulling and storing images`
+* Check: `Enable Wasm`
 
 ![Docker Desktop containerd](./images/docker_containerd.png)
 
@@ -94,19 +95,25 @@ Create a `Dockerfile`:
 ```Dockerfile
 FROM scratch
 COPY ./target/wasm32-wasi/debug/hello-wasm.wasm /hello-wasm.wasm
-ENTRYPOINT [ "hello-wasm.wasm" ]
+ENTRYPOINT [ "/hello-wasm.wasm" ]
 ```
 
 Build the image:
 
 ```sh
-docker buildx build -t meteatamel/hello-wasm:0.1 .
+docker build -t meteatamel/hello-wasm:0.1 .
 ```
 
-Run the image locally:
+Run the image locally in Docker with `wasmedge`:
 
 ```sh
-docker run --rm --runtime=io.containerd.wasmedge.v1 meteatamel/hello-wasm:0.1
+docker run --runtime=io.containerd.wasmedge.v1 meteatamel/hello-wasm:0.1
+```
+
+Or with `wasmtime`:
+
+```sh
+docker run --runtime=io.containerd.wasmtime.v1 meteatamel/hello-wasm:0.1
 ```
 
 As it’s running, you can see that it’s just a regular container:
@@ -128,6 +135,7 @@ docker image push meteatamel/hello-wasm:0.1
 
 ## References
 
+* [Wasm workloads (Beta)](https://docs.docker.com/desktop/wasm/)
 * [Announcing Docker+Wasm Technical Preview 2](https://www.docker.com/blog/announcing-dockerwasm-technical-preview-2/)
 * [Getting started with Docker + Wasm](https://nigelpoulton.com/getting-started-with-docker-and-wasm/)
 * [WASM + Docker HelloWorld](https://blog.devgenius.io/wasm-docker-hello-world-2ac6a456ddd4)
