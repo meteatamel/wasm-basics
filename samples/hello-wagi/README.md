@@ -3,7 +3,7 @@
 WebAssembly Gateway Interface ([WAGI](https://github.com/deislabs/wagi)) allows
 you to run WebAssembly WASI binaries as HTTP handlers. Write a command line
 application that prints a few headers, and compile it to `wasm32-wasi`. Add an
-entry to the `modules.toml` matching URL to Wasm module. That's it. You can use
+entry to a `modules.toml` file matching URL to Wasm module. That's it. You can use
 any programming language that can compile to `wasm32-wasi`.
 
 Headers are placed in environment variables. Query parameters, when present, are
@@ -150,8 +150,8 @@ Hello WAGI from Go!
 
 ## Run as a WAGI module
 
-To run these samples with WAGI, create a simple `modules.toml` file that maps
-paths to Wasm modules:
+To run these samples with WAGI, create a simple [modules.toml](./modules.toml)
+file that maps paths to Wasm modules:
 
 ```yaml
 [[module]]
@@ -185,7 +185,7 @@ X_MATCHED_ROUTE = /csharp
 ```
 
 ```sh
-curl -X POST http://127.0.0.1:3000/csharp\?arg1=value1 -d 'Hello World'
+curl -X POST http://127.0.0.1:3000/go\?arg1=value1 -d 'Hello World'
 
 Hello WAGI from Go!
 ### Environment variables: 24 ###
@@ -205,4 +205,4 @@ Hello World
 
 ## References
 
-* [Wasm, WASI, Wagi: What are they?](hhttps://www.fermyon.com/blog/wasm-wasi-wagi)
+* [Wasm, WASI, Wagi: What are they?](https://www.fermyon.com/blog/wasm-wasi-wagi)
