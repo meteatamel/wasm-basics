@@ -10,6 +10,8 @@ Headers are placed in environment variables. Query parameters, when present, are
 sent in as command line options. Incoming HTTP payloads are sent in via STDIN.
 And the response is simply written to STDOUT.
 
+![Wagi](./images/wagi.png)
+
 ## Prerequisites
 
 * You have a Wasm runtime installed, for example
