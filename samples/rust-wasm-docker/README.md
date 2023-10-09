@@ -3,6 +3,7 @@
 ## Prerequisites
 
 * You have Docker Desktop v4.21.0 or later.
+* You need to have containerd and Wasm experimental support enabled.
 * You have Rust [installed](https://www.rust-lang.org/tools/install).
 * You have a Wasm runtime installed, for example
   [Wasmtime](https://wasmtime.dev/) or

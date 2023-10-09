@@ -1,20 +1,20 @@
-# Running .NET 8 (preview) on Wasm
+# Running .NET 8 on Wasm
 
 ## Prerequisites
 
-* You have .NET 8 Preview 4 [installed](https://dotnet.microsoft.com/en-us/download/dotnet/8.0).
+* You have .NET 8 [installed](https://dotnet.microsoft.com/en-us/download/dotnet/8.0).
 * You have a Wasm runtime installed, for example
   [Wasmtime](https://wasmtime.dev/) or
   [WasmEdge](https://wasmedge.org/book/en/quick_start/install.html).
 
 ## Configure .NET for Wasm
 
-Make sure you have .NET 8 Preview 4:
+Make sure you have .NET 8:
 
 ```sh
 dotnet --version
 
-8.0.100-preview.4.23260.5
+8.0.100-rc.1.23463.5
 ```
 
 Install `wasi-experimental` workload that has a new `Wasi Console App` template:
