@@ -111,6 +111,8 @@ Change the `HelloWasm.csproj` to the following:
     <!-- <RuntimeIdentifier>wasi-wasm</RuntimeIdentifier> -->
     <OutputType>Exe</OutputType>
     <!-- <PublishTrimmed>true</PublishTrimmed> -->
+    <!-- This flag is supposed to work in .NET 8 but it doesn't -->
+    <!-- <WasmSingleFileBundle>true</WasmSingleFileBundle> -->
   </PropertyGroup>
 </Project>
 ```

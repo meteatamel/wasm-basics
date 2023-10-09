@@ -4,6 +4,8 @@
     <!-- <RuntimeIdentifier>wasi-wasm</RuntimeIdentifier> -->
     <OutputType>Exe</OutputType>
     <!-- <PublishTrimmed>true</PublishTrimmed> -->
+    <!-- This flag is supposed to work in .NET 8 but it doesn't -->
+    <!-- <WasmSingleFileBundle>true</WasmSingleFileBundle> -->
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Wasi.Sdk" Version="0.1.4-preview.10020" />
